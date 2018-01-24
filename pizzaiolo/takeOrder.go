@@ -23,7 +23,6 @@ func takeOrder(input chan *PizzaOrder, numOfWorkers, bufferSize int) chan *Pizza
 				time.Sleep(speed * orderTime)
 				order.ID = uuid.Must(uuid.NewV4()).String()
 				log.Printf("Placing order with %v", order.Toppings)
-				order.OrderTime = time.Now()
 				outputChan <- order
 			}
 			wg.Done()

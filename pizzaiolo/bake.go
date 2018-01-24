@@ -20,7 +20,6 @@ func bake(input chan *PizzaOrder, numOfWorkers, bufferSize int) chan *PizzaOrder
 				log.Printf("Baking pizza: %s", order.ID)
 				time.Sleep(speed * bakeTime)
 				log.Printf("Pizza %s is ready!", order.ID)
-				order.BakedTime = time.Now()
 				outputChan <- order
 			}
 			wg.Done()

@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"sync"
-	"time"
 )
 
 func serve(input chan *PizzaOrder, numOfWorkers, bufferSize int) chan *PizzaOrder {
@@ -19,7 +18,6 @@ func serve(input chan *PizzaOrder, numOfWorkers, bufferSize int) chan *PizzaOrde
 			for order := range input {
 				log.Printf("Serving pizza: %s", order.ID)
 				outputChan <- order
-				order.ServeTime = time.Now()
 			}
 			wg.Done()
 		}()
