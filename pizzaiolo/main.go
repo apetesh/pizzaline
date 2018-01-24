@@ -18,13 +18,9 @@ const (
 )
 
 type PizzaOrder struct {
-	ID            string
-	CustomerName  string
-	Toppings      []string
-	WaitStartTime time.Time
-	OrderTime     time.Time
-	BakedTime     time.Time
-	ServeTime     time.Time
+	ID           string
+	CustomerName string
+	Toppings     []string
 }
 
 var (
@@ -39,7 +35,6 @@ func main() {
 	orderChan := make(chan *PizzaOrder, numOfOrders)
 	go func() {
 		for _, order := range generateOrders(numOfOrders) {
-			order.WaitStartTime = time.Now()
 			orderChan <- order
 		}
 		close(orderChan)
@@ -49,7 +44,7 @@ func main() {
 	preparedPizzas := prepare(orderedPizzas, pizzaMakers, numOfOrders)
 	bakedPizzas := bake(preparedPizzas, ovens, numOfOrders)
 
-	for pizzaToServe = range serve(bakedPizzas, 1, numOfOrders) {
+	for pizzaToServe := range serve(bakedPizzas, 1, numOfOrders) {
 		fmt.Printf("%s, come get your pizza.\n", pizzaToServe.CustomerName)
 	}
 }
